@@ -1,8 +1,7 @@
-package sample;
+package models;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Message implements Serializable {
     private User user;

@@ -1,6 +1,5 @@
-package sample;
+package controllers;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,14 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import models.*;
 
 
-import java.awt.*;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +22,6 @@ public class LoginController {
     @FXML private TextField passwordTextField;
     @FXML private Stage stage;
     private Message loginResultMessage;
-
-    public static LoginController con;
 
     private static LoginController instance= new LoginController();
 
@@ -48,7 +42,7 @@ public class LoginController {
         System.out.println(password);
 
         User newUser = new User(username, password , Status.ONLINE);
-        Message loginMessage = new Message(newUser,MessageType.LOGIN);
+        Message loginMessage = new Message(newUser, MessageType.LOGIN);
 
 //        FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("loginFrame.fxml"));
 //        Parent window1 = (Pane) fmxlLoader.load();
@@ -59,7 +53,7 @@ public class LoginController {
 //_____________________________________________________________________________________________
         // TODO
         try {
-            Thread.sleep(5000);  // 1:19 18.04. - ppczekac az ClientThread wykona sie i w LoginControler polu Message ustawi wartosc
+            Thread.sleep(4000);  // 1:19 18.04. - ppczekac az ClientThread wykona sie i w LoginControler polu Message ustawi wartosc
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -77,13 +71,13 @@ public class LoginController {
             List<User> users = new ArrayList<>(getInstance().loginResultMessage.getUsersHashMap().values());
             for (User user : users) {
                 System.out.println("..............." + user.getUsername());
-
             }
-            //                Parent parent = FXMLLoader.load(getClass().getResource("userFrame.fxml"));
-//                Scene scene = new Scene(parent);
-//                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-//                stage.setScene(scene);
-//                stage.show();
+
+            Parent parent = FXMLLoader.load(getClass().getResource("../views/userFrame.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
 
 //                FXMLLoader loader = new FXMLLoader();
 //                loader.setLocation(getClass().getResource("userFrame.fxml"));
@@ -100,52 +94,18 @@ public class LoginController {
 //
 //                window.setScene(scene1);
 //                window.show();
-            new NewFrame("sample/userFrame.fxml","title", 500,600);
+           // new NewFrame("models/userFrame.fxml","title", 500,600);
 
         }
 
 
 
-        //   new Server().getClientThreads().add(clientThread);
-//        System.out.println("login action");
-//        if(username.equals("123") && password.equals("123")){
-//            new NewFrame("sample/sample.fxml","ClientThread frame", 500, 400);
-//            // create new ClientThread
-//        }
-
     }
-//    public void loginButtonAction() throws IOException {
-//        String hostname = hostnameTextfield.getText();
-//        int port = Integer.parseInt(portTextfield.getText());
-//        String username = usernameTextfield.getText();
-//        String picture = selectedPicture.getText();
-//
-//        FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/ChatView.fxml"));
-//        Parent window = (Pane) fmxlLoader.load();
-//        con = fmxlLoader.<ChatController>getController();
-//        Listener listener = new Listener(hostname, port, username, picture, con);
-//        Thread x = new Thread(listener);
-//        x.start();
-//        this.scene = new Scene(window);
-//    }
+
     @FXML
     public void registerAction(){
-        new NewFrame("sample/registerFrame.fxml","Register", 500, 400);
+        new NewFrame("views/registerFrame.fxml","Register", 500, 400);
 
-    }
-
-    public void updateFrame(){
-        Platform.runLater(() ->{
-//            Parent root = null;
-//            try {
-//                root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-//                stage.setScene(new Scene(root));
-//                stage.show();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
-        });
     }
 
     public Message getLoginResultMessage() {
@@ -157,27 +117,5 @@ public class LoginController {
         this.loginResultMessage = loginResultMessage;
         System.out.println(loginResultMessage.getMessageType() + "//././././././././././././././././././././/./././");
     }
-
-    //    public void showUserFrame(Message loginResultMessage) {
-//
-//        MessageType messageType = loginResultMessage.getMessageType();
-//        List<User> users = new ArrayList<>(loginResultMessage.getUsersHashMap().values());
-//        for (User user : users) {
-//            System.out.println("..............." + user.getUsername());
-//
-//        }
-//
-//        if (messageType.equals(MessageType.LOGIN_SUCCESSFULL)) {
-//
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/userFrame.fxml"));
-//            //  Parent root = (Parent) loader.load();
-//
-//            UserController userController = loader.<UserController>getController();
-////                Object load = loader.load();
-//            // UserController userController = loader.getController();
-//            userController.setUsers(users);
-//
-//        }
-//    }
 
 }

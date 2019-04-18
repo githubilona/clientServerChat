@@ -1,4 +1,4 @@
-package sample;
+package controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import models.*;
 
 
 public class RegisterController {
@@ -77,7 +78,7 @@ ________________________________________________________________________________
         }
 
 
-        // new NewFrame("sample/LoginFrame.fxml","Login Frame", 800, 600);
+        // new NewFrame("models/LoginFrame.fxml","Login Frame", 800, 600);
     }
 
   ___________________________________________________________________________________________ */

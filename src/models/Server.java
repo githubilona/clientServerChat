@@ -1,4 +1,4 @@
-package sample;
+package models;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *  4.04.19 21:47 HashMap has to be static, otherwise useras are not saved to HashMAp

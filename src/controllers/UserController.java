@@ -1,19 +1,24 @@
-package sample;
+package controllers;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import models.Status;
+import models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class UserController {
-    private List<User> list;
+
     @FXML private ListView<User> listView;
-    @FXML private TextArea textArea;
+    @FXML private Label usernameLabel;
+    @FXML private ImageView imageView;
+    private List<User> list;
     private List <User> users;
 
 // initalize vs constructor- constructor -> recognizing @FXML annotations -> initalize()
@@ -26,17 +31,21 @@ public class UserController {
         list.add(user1);
         list.add(user2);
 
+        // listView holds User objects, so toString() is called to display User in each tableView field
+        // by default toString() returns set of digits and characters which describe object, so overriding toString in user class,
+        // to return String username instead of User object will solve that problem
         List<User> users = new ArrayList<>(LoginController.getInstance().getLoginResultMessage().getUsersHashMap().values());
         listView.getItems().setAll(users);
         this.listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
 
     }
     @FXML
     public void handleClickListView(){
         User user = listView.getSelectionModel().getSelectedItem();
         System.out.println(user.getUsername());
-        textArea.setText(user.getUsername());
-
+        usernameLabel.setText(user.getUsername());
+        imageView.setImage(new Image(user.getPhoto()));
 
     }
 
@@ -45,7 +54,7 @@ public class UserController {
     }
     //    public UserController(List<User> users) {
 //        Platform.runLater(() ->{
-//            new NewFrame("sample/userFrame.fxml","Chat App", 800, 500);
+//            new NewFrame("models/userFrame.fxml","Chat App", 800, 500);
 //            setList(users);
 //
 //        });

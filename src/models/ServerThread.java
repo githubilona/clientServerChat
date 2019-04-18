@@ -1,4 +1,4 @@
-package sample;
+package models;
 
 import java.io.*;
 import java.net.Socket;

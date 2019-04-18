@@ -1,20 +1,13 @@
-package sample;
+package models;
 
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
+import controllers.LoginController;
+import controllers.RegisterController;
+import controllers.UserController;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.file.Files;
-import java.util.Scanner;
 
 public class ClientThread extends Thread {
     private User user;
@@ -158,14 +151,14 @@ public class ClientThread extends Thread {
                 System.out.println(messageFromServer.getMessageType() + "@@@@@@@@@");
                 switch (messageFromServer.getMessageType()) {
                     case USER_REGISTERED:
-//                    FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("sample/registerFrame.fxml"));
-//                    fmxlLoader.setLocation(getClass().getResource("sample/registerFrame.fxml"));
+//                    FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("models/registerFrame.fxml"));
+//                    fmxlLoader.setLocation(getClass().getResource("models/registerFrame.fxml"));
 //                    registerController = fmxlLoader.<RegisterController>getController();
 //                        Dialog<ButtonType> dialog = new Dialog<>();
 //                    FXMLLoader loader = new FXMLLoader();
-//                    loader.setLocation(getClass().getResource("/sample/registerFrame.fxml"));
+//                    loader.setLocation(getClass().getResource("/models/registerFrame.fxml"));
 //                        dialog.getDialogPane().setContent(loader.load());
-////                    Parent root = loader.load(getClass().getResource("/sample/registerFrame.fxml"));
+////                    Parent root = loader.load(getClass().getResource("/models/registerFrame.fxml"));
 //                    RegisterController registerController = loader.getController();
 //                        registerController=messageToServer.getRegisterController();
                     registerController.updateFrame(MessageType.USER_REGISTERED);

@@ -1,4 +1,4 @@
-package sample;
+package models;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,14 +35,14 @@ public class NewFrame {
     public void switchFrame(String title) {
         switch (title) {
             case "LOGIN":
-                this.relativePath="sample/loginFrame.fxml";
+                this.relativePath= "views/loginFrame.fxml";
                 this.title=title;
                 this.width=800;
                 this.height=600;
                 this.createFrame(relativePath,title,width,height);
                 break;
             case "REGISTER":
-                this.relativePath="sample/registerFrame.fxml";
+                this.relativePath= "views/registerFrame.fxml";
                 this.title=title;
                 this.width=600;
                 this.height=400;

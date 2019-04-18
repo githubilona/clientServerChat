@@ -1,4 +1,4 @@
-package sample;
+package models;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -10,11 +10,17 @@ public class User implements Serializable {
     private String username;
     private String password;
     private Status status;
+    private String firstName;
+    private String lastName;
+    // TODO date of birth
+    private String photo;
+
 
     public User(String username, String password, Status status) {
         this.username = username;
         this.password = password;
         this.status=status;
+        this.photo="images/avatar.jpg";  //default photo assigned during registration
     }
 
     public String getUsername() {
@@ -39,6 +45,35 @@ public class User implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    @Override
+    public String toString() {
+        return username;
     }
 
     @Override

@@ -1,6 +1,5 @@
-package sample;
+package models;
 
-import javafx.application.Application;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +20,7 @@ public class FrameThread {
                 latch.countDown();
                 Parent root;
                 try {
-                    String relativePath="sample/loginFrame.fxml";
+                    String relativePath= "views/loginFrame.fxml";
                     String title="title";
                     int width=800;
                     int height=600;
