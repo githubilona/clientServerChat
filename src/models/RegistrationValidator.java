@@ -10,7 +10,8 @@ public class RegistrationValidator {
     /**
      * private final static -> create this variable only once. private final -> create this variable for every object. First one saves memory
      */
-    private static final String USERNAME_PATTERN ="^[a-z0-9]{3,15}$";
+    // TODO change [1,15] to [3,15] when app will be finished
+    private static final String USERNAME_PATTERN ="^[a-z0-9]{1,15}$";
 
     public RegistrationValidator() {
         this.pattern = pattern.compile(USERNAME_PATTERN);

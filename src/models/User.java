@@ -13,6 +13,7 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     // TODO date of birth
+    // TODO gender
     private String photo;
 
 
@@ -20,7 +21,7 @@ public class User implements Serializable {
         this.username = username;
         this.password = password;
         this.status=status;
-        this.photo="images/avatar.jpg";  //default photo assigned during registration
+        this.photo="images/avatar2.png";  //default photo assigned during registration
     }
 
     public String getUsername() {

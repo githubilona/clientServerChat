@@ -3,6 +3,7 @@ package models;
 import controllers.LoginController;
 import controllers.RegisterController;
 import controllers.UserController;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -132,7 +133,15 @@ public class ClientThread extends Thread {
                         break;
                     case LOGIN:
                         this.objectOutputStream.writeObject(messageToServer);
+                        System.out.println("             this.objectOutputStream.writeObject(messageToServer);");
+//                        messageToServer.setMessageType(MessageType.UPDATE_USER_LIST);
+//                        this.objectOutputStream.writeObject(messageToServer);
+//                        this.objectOutputStream.flush();
                         break;
+//                    case UPDATE_USER_LIST:
+//                        System.out.println("                 case UPDATE_USER_LIST: in CLIENT THREAD");
+//                        this.objectOutputStream.writeObject(messageToServer);
+//                        break;
                 }
                 objectOutputStream.flush();
                 messageToServer=null;            // 11.04- to prevent infinite while loop, after sending msg to server set messageToServer to null
@@ -151,14 +160,14 @@ public class ClientThread extends Thread {
                 System.out.println(messageFromServer.getMessageType() + "@@@@@@@@@");
                 switch (messageFromServer.getMessageType()) {
                     case USER_REGISTERED:
-//                    FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("models/registerFrame.fxml"));
-//                    fmxlLoader.setLocation(getClass().getResource("models/registerFrame.fxml"));
+//                    FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("models/registerView.fxml"));
+//                    fmxlLoader.setLocation(getClass().getResource("models/registerView.fxml"));
 //                    registerController = fmxlLoader.<RegisterController>getController();
 //                        Dialog<ButtonType> dialog = new Dialog<>();
 //                    FXMLLoader loader = new FXMLLoader();
-//                    loader.setLocation(getClass().getResource("/models/registerFrame.fxml"));
+//                    loader.setLocation(getClass().getResource("/models/registerView.fxml"));
 //                        dialog.getDialogPane().setContent(loader.load());
-////                    Parent root = loader.load(getClass().getResource("/models/registerFrame.fxml"));
+////                    Parent root = loader.load(getClass().getResource("/models/registerView.fxml"));
 //                    RegisterController registerController = loader.getController();
 //                        registerController=messageToServer.getRegisterController();
                     registerController.updateFrame(MessageType.USER_REGISTERED);
@@ -178,7 +187,7 @@ public class ClientThread extends Thread {
 //                        Platform.runLater(() ->{
 //                            Parent root = null;
 //                            try {
-//                                root = FXMLLoader.load(getClass().getResource("userFrame.fxml"));
+//                                root = FXMLLoader.load(getClass().getResource("userView.fxml"));
 //                                stage.setScene(new Scene(root));
 //                                stage.show();
 //                            } catch (IOException e) {
@@ -188,11 +197,47 @@ public class ClientThread extends Thread {
 //                        });
                         // message from server contains list of users
                        // loginController.showUserFrame(messageFromServer);
-                        loginController.setLoginResultMessage(messageFromServer);
-                       // LoginController.getInstance().setLoginResultMessage(messageFromServer);
+
+                       //loginController.setLoginResultMessage(messageFromServer);
+                        // UserController.getInstance().setUserList(messageFromServer);
+                        LoginController.getInstance().setLoginResultMessage(messageFromServer);
                         break;
                     case LOGIN_FAILED:
+                        LoginController.getInstance().setLoginResultMessage(messageFromServer);
                         break;
+                    case UPDATE_USER_LIST:
+                        System.out.println("5555555555555555555555555555555555555555555555");
+                        // TODO fix Thread.sleep
+                        // I'm using Thread.sleep here, becouse before updating ListView in UserCOntroller
+                        // user Frame has to be initialized. So to prevent NullPointerException
+                        // when frame components (listView etc) are not set yet, program has to wait until user scene
+                        // will be initialized. Then program access user scene components
+                        try {
+                            Thread.sleep(6000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        UserController.getInstance().setUserList(messageFromServer);
+                        System.out.println("                        client  case UPDATE_USER_LIST:");
+                        break;
+//                    case UPDATE_USER_LIST:
+////                        try {
+////                            Thread.sleep(5000);
+////                        } catch (InterruptedException e) {
+////                            e.printStackTrace();
+////                        }
+////                        UserController.getInstance().setUserList(messageFromServer);
+////                        System.out.println("case update user list ");
+////                        // Platform run later is necessay heare, becouse othrwise all active clients won't get the messagethe the new
+////                        // client has joinde
+////
+////                        Platform.runLater(() ->{
+////                        System.out.println(messageFromServer.getUser() + " "+ messageFromServer.getMessageType());
+////                        LoginController.getInstance().setUpdateUserListMessage(messageFromServer);
+////                      // UserController.getInstance().setUserList(messageFromServer);
+//////                        UserController.getInstance().setObservableList(messageFromServer.getUsersHashMap());
+////                        });
+//                       break;
                 }
 
             }
@@ -203,5 +248,9 @@ public class ClientThread extends Thread {
             e.printStackTrace();
         }
 
+    }
+
+    public void setMessageToServer(Message messageToServer) {
+        this.messageToServer = messageToServer;
     }
 }

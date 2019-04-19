@@ -20,13 +20,12 @@ public class LoginController {
     @FXML private Button loginButton;
     @FXML private TextField usernameTextField;
     @FXML private TextField passwordTextField;
-    @FXML private Stage stage;
-    private Message loginResultMessage;
 
-    private static LoginController instance= new LoginController();
+    private  Message loginResultMessage;
+    private static LoginController instance; //= new LoginController();
 
     public LoginController() {
-        //instance = this;
+        instance = this;
     }
 
     public static LoginController getInstance() {
@@ -35,7 +34,6 @@ public class LoginController {
 
     @FXML
     public void loginAction(ActionEvent event) throws IOException {
-        stage = (Stage) loginButton.getScene().getWindow();
         String username=usernameTextField.getText().trim();
         String password=passwordTextField.getText().trim();
         System.out.println(username);
@@ -43,79 +41,55 @@ public class LoginController {
 
         User newUser = new User(username, password , Status.ONLINE);
         Message loginMessage = new Message(newUser, MessageType.LOGIN);
-
-//        FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("loginFrame.fxml"));
-//        Parent window1 = (Pane) fmxlLoader.load();
-//        con = fmxlLoader.<LoginController>getController();
-
+// TODO delete getInstance( from the constructor, it's no loger needed since LoginController in ClientThread is accesed "via singleton"
         ClientThread clientThread = new ClientThread(loginMessage, getInstance());
         clientThread.start();
 //_____________________________________________________________________________________________
-        // TODO
+        // TODO execute the code below when the value in loginResultMessage will be set by the ClientThread
+        // ClientThread have to work continuously to handle server messages, so it cant't be suspended i.e by join()- which
+        // waits until one thread finish execution
+
         try {
-            Thread.sleep(4000);  // 1:19 18.04. - ppczekac az ClientThread wykona sie i w LoginControler polu Message ustawi wartosc
+            Thread.sleep(5000);  // 1:19 18.04. - ppczekac az ClientThread wykona sie i w LoginControler polu Message ustawi wartosc
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        if(getInstance().loginResultMessage!=null){
 
-            System.out.println(loginResultMessage);
-            System.out.println("dchnjhvb buer felhrfc  eruf berlhb eurnppadfve  wfqerih eivn");
+        if(loginResultMessage!=null){
+
+            System.out.println(loginResultMessage + "   "+ loginResultMessage.getUser() );
+            System.out.println("                loginResultMessage!=null");
         }
-        System.out.println("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn n n n   n n ");
-        MessageType messageType = getInstance().getLoginResultMessage().getMessageType();
-        System.out.println("                    "+messageType);
-        if(messageType.equals(MessageType.LOGIN_SUCCESSFULL)){
 
-            List<User> users = new ArrayList<>(getInstance().loginResultMessage.getUsersHashMap().values());
-            for (User user : users) {
-                System.out.println("..............." + user.getUsername());
-            }
-
-            Parent parent = FXMLLoader.load(getClass().getResource("../views/userFrame.fxml"));
+// _________________________________________________ open user Frame if entered login data was correct
+       if(loginResultMessage.getMessageType().equals(MessageType.LOGIN_SUCCESSFULL)){
+            Parent parent = FXMLLoader.load(getClass().getResource("../views/userView.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
 
-//                FXMLLoader loader = new FXMLLoader();
-//                loader.setLocation(getClass().getResource("userFrame.fxml"));
-//                Parent parent1 = loader.load();
-//
-//                Scene scene1 = new Scene(parent1);
-//
-//                //access the controller and call a method
-//                UserController userController = loader.getController();
-//                userController.setUsers(users);
-//
-//                //This line gets the Stage information
-//                Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-//
-//                window.setScene(scene1);
-//                window.show();
-           // new NewFrame("models/userFrame.fxml","title", 500,600);
-
-        }
-
-
-
+           clientThread.setMessageToServer(new Message(loginResultMessage.getUser(), MessageType.UPDATE_USER_LIST));
+       }else {
+           //TODO display information in login frame, that username or password is incorrect
+           System.out.println("username or password is incorrect");
+       }
     }
 
     @FXML
     public void registerAction(){
-        new NewFrame("views/registerFrame.fxml","Register", 500, 400);
+        new NewFrame("views/registerView.fxml","Register", 500, 400);
 
+    }
+
+    public void setLoginResultMessage(Message loginResultMessage) {
+        System.out.println("            setLoginResultMessage");
+        this.loginResultMessage= loginResultMessage;
+        System.out.println(loginResultMessage.getMessageType() + "//././././././././././././././././././././/./././");
     }
 
     public Message getLoginResultMessage() {
         return loginResultMessage;
     }
-
-    public void setLoginResultMessage(Message loginResultMessage) {
-        System.out.println("            setLoginResultMessage");
-        this.loginResultMessage = loginResultMessage;
-        System.out.println(loginResultMessage.getMessageType() + "//././././././././././././././././././././/./././");
-    }
-
 }

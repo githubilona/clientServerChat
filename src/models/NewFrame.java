@@ -35,14 +35,14 @@ public class NewFrame {
     public void switchFrame(String title) {
         switch (title) {
             case "LOGIN":
-                this.relativePath= "views/loginFrame.fxml";
+                this.relativePath= "views/loginView.fxml";
                 this.title=title;
                 this.width=800;
                 this.height=600;
                 this.createFrame(relativePath,title,width,height);
                 break;
             case "REGISTER":
-                this.relativePath= "views/registerFrame.fxml";
+                this.relativePath= "views/registerView.fxml";
                 this.title=title;
                 this.width=600;
                 this.height=400;

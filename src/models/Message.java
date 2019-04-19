@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Message implements Serializable {
@@ -68,4 +69,9 @@ public class Message implements Serializable {
 //    public void setRegisterController(RegisterController registerController) {
 //        this.registerController = registerController;
 //    }
+
+    // _________________________
+    public ArrayList<User> getUsers() {
+        return new ArrayList<>(usersHashMap.values());
+    }
 }

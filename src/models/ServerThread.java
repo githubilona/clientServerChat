@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 public class ServerThread  extends Server implements Runnable {
@@ -12,7 +11,6 @@ public class ServerThread  extends Server implements Runnable {
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
-    private static HashSet<ObjectOutputStream> writers = new HashSet<>();
     private List<ClientThread> clients = new ArrayList<>();
    // private HashMap<String, User> usersHashMap=super.getUsersHashMap();
 
@@ -37,6 +35,8 @@ public class ServerThread  extends Server implements Runnable {
              //   objectOutputStream.flush();
                 this.objectInputStream=new ObjectInputStream(socket.getInputStream());
 
+                super.getWriters().add(objectOutputStream);
+                System.out.println("                 new objectOutputStraem has been added to the list");
                 while (socket.isConnected()){
                     readFromClient();
                 }
@@ -47,7 +47,7 @@ public class ServerThread  extends Server implements Runnable {
 //
 //                    if(clientMessage!=null){
 //                        System.out.println("CLient meaasage:          "+clientMessage.getUser().getUsername() );
-//                        write(clientMessage);
+//                        writeToAll(clientMessage);
 //
 //                    }
 //                    switch(clientMessage.getMessageType()){
@@ -91,7 +91,7 @@ public class ServerThread  extends Server implements Runnable {
             System.out.println(exceptionMessage);
                 // TODO send why registration didn't succeed - wrong format or duplicate username
                 // TODO if checkDuplicateUsername returns true- registration didn't succeed  becouse of duplicate
-                // TODO write that message to the frame
+                // TODO writeToAll that message to the frame
             return true;
         }
     }
@@ -115,22 +115,28 @@ public class ServerThread  extends Server implements Runnable {
         try{
             Message message = new Message(messageType, super.getUsersHashMap());
             objectOutputStream.writeObject(message);
-            writers.add(objectOutputStream);
+            super.getWriters().add(objectOutputStream);
            // objectOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    // to write msg to all connected users
-    private void write(Message msg) throws IOException {
-        for (ObjectOutputStream writer : writers) {
-            msg.setUsersHashMap(super.getUsersHashMap());
-            writer.writeObject(msg);
-            writer.reset();
+    // to writeToAll msg to all connected users
+    private void writeToAll(Message msg){
+        for (ObjectOutputStream writer : super.getWriters()) {
+            try {
+                msg.setUsersHashMap(super.getUsersHashMap());
+                writer.writeObject(msg);
+                writer.reset();
+                //writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
-    public boolean login(Message clientMesage){
+    public boolean login(Message clientMesage) {
         for(User user : super.getUsersHashMap().values()){
             if(user.equals(clientMesage.getUser())){
                 System.out.println("Logged in!");
@@ -166,10 +172,16 @@ public class ServerThread  extends Server implements Runnable {
                         // Send the list of logged in users
                         // convert hash map to list - don't sent passwords
                         sendToClient(new Message(clientMesage.getUser(), MessageType.LOGIN_SUCCESSFULL, super.getUsersHashMap()));
+                       // System.out.println("                     case login ,  writeToAll update user list msg");
+                        writeToAll(new Message(clientMesage.getUser(), MessageType.UPDATE_USER_LIST, super.getUsersHashMap()));
                     }else{
                         sendToClient(new Message(clientMesage.getUser(), MessageType.LOGIN_FAILED));
                     }
                     break;
+//                case UPDATE_USER_LIST:
+//                    System.out.println("            write to alll update user list in sERVER ");
+//                    writeToAll(new Message(clientMesage.getUser(), MessageType.UPDATE_USER_LIST, super.getUsersHashMap()));
+//                    break;
             }
         }
 

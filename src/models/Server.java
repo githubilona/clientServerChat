@@ -1,10 +1,12 @@
 package models;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -13,6 +15,8 @@ import java.util.List;
 public class Server {
     private List<ClientThread> clientThreads = new ArrayList<>();
     private static HashMap<String, User> usersHashMap=new HashMap<>();
+    private static HashSet<ObjectOutputStream> writers = new HashSet<>();
+
     public static void main(String[] args) {
 
         try(ServerSocket serverSocket = new ServerSocket(5000)){
@@ -49,5 +53,9 @@ public class Server {
 
     public void setUsersHashMap(HashMap<String, User> usersHashMap) {
         this.usersHashMap = usersHashMap;
+    }
+
+    public  HashSet<ObjectOutputStream> getWriters() {
+        return writers;
     }
 }
