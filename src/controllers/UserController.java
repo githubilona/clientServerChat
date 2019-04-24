@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import models.Message;
 import models.NewFrame;
+import models.PeerServer2;
 import models.User;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class UserController {
         User user = listView.getSelectionModel().getSelectedItem();
         usernameLabel.setText(user.getUsername());
         imageView.setImage(new Image(user.getPhoto()));
-        System.out.println("Selected user : "+user.getUsername());
+        System.out.println("Selected user : "+user.getUsername() + " port : " + user.getPort());
     }
     @FXML
     public void selectButtonAction(ActionEvent event){
@@ -61,6 +62,12 @@ public class UserController {
         new NewFrame("views/chatView.fxml", selectedUser.getUsername(), 800, 600);
         ChatController.getInstance().setReceiver(selectedUser);
         ChatController.getInstance().setSender(sender);
+
+        PeerServer2 peerServer2 = new PeerServer2();
+        System.out.println("receiver port "+ selectedUser.getPort() + "sender port "+ sender.getPort());
+        peerServer2.setPort(sender.getPort());
+              Thread peerServerThread2 = new Thread(peerServer2);
+        peerServerThread2.start();
 //        try {
 //            Parent parent = FXMLLoader.load(getClass().getResource("/views/chatView.fxml"));
 //            Scene scene = new Scene(parent);

@@ -13,6 +13,7 @@ public class ServerThread  extends Server implements Runnable {
 
     private List<ClientThread> clients = new ArrayList<>();
    // private HashMap<String, User> usersHashMap=super.getUsersHashMap();
+   private Message clientMesage;
 
     public ServerThread(Socket socket){
         this.socket=socket;
@@ -123,7 +124,13 @@ public class ServerThread  extends Server implements Runnable {
     }
     public void readFromClient(){
             // TODO cbheck if client message is not null
-        Message clientMesage= readClientMessage();
+        try {
+            clientMesage= (Message)objectInputStream.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         if(clientMesage!=null){
             System.out.println("Server " + clientMesage.getMessageType()+ " user "+ clientMesage.getUser().getUsername());
             switch(clientMesage.getMessageType()){
@@ -135,16 +142,23 @@ public class ServerThread  extends Server implements Runnable {
                     }else if(isDuplicated){
                         sendToClient(new Message(clientMesage.getUser(), MessageType.USER_NOT_REGISTERED_DUPLICATE));
                     }else {
+                        // assign port to each registered user
+                        int port = super.getPort() +1;
+                        super.setPort(port);
+                        clientMesage.getUser().setPort(port);
                         super.getUsersHashMap().put(clientMesage.getUser().getUsername(), clientMesage.getUser());
                         sendToClient(new Message(clientMesage.getUser(), MessageType.USER_REGISTERED));
                     }
                     break;
                 case LOGIN:
+                    super.setPort(super.getPort());
+                    clientMesage.getUser().setPort(super.getPort());
                     boolean isLogged =login(clientMesage);
                     System.out.println("CASE LOGIN in SERVER");
                     if(isLogged){
                         // Send the list of logged in users
                         // convert hash map to list - don't sent passwords
+
                         sendToClient(new Message(clientMesage.getUser(), MessageType.LOGIN_SUCCESSFULL, super.getUsersHashMap()));
                        // System.out.println("                     case login ,  writeToAll update user list msg");
                         writeToAll(new Message(clientMesage.getUser(), MessageType.UPDATE_USER_LIST, super.getUsersHashMap()));

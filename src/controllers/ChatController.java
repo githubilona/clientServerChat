@@ -1,11 +1,13 @@
 package controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import models.PeerClient;
-import models.PeerServer;
-import models.User;
+import models.*;
+
+import java.io.IOException;
+import java.net.*;
 
 public class ChatController {
 
@@ -13,37 +15,55 @@ public class ChatController {
     @FXML private TextArea sendMessageTextArea;
     @FXML private Button sendButton;
     private PeerClient peerClient;
-    private PeerServer peerServer;
+    private PeerServer2 peerServer2;
+    private PeerClient2 peerClient2;
     private Thread peerClientThread;
     private Thread peerServerThread;
     private User sender;
     private User receiver;
+    private String peerResponse;
 
     private static ChatController instance;
 
     public ChatController(){
         instance=this;
+
     }
     public void initialize(){
-        peerClient = new PeerClient();
-        peerServer = new PeerServer();
-        peerClientThread= new Thread(peerClient);
-        peerServerThread = new Thread(peerServer);
-        peerClientThread.start();
-        peerServerThread.start();
+        peerClient2 = new PeerClient2();
+//        peerClient = new PeerClient();
+//        peerServer = new PeerServer();
+//        peerClientThread= new Thread(peerClient);
+//        peerServerThread = new Thread(peerServer);
+//        peerClientThread.start();
+//        peerServerThread.start();
+//         peerServer2 =new PeerServer2();
+//        peerServer2.setPort(1001);
+//         peerServer2.server();
+//        Thread peerServerThread2 = new Thread(peerServer2);
+//        peerServerThread2.start();
+
     }
 
     @FXML
     public void sendButtonAction(){
+        System.out.println("send msg button ");
         String message= chatTextArea.getText() +"\n" + sender.getUsername() + ":\t" + sendMessageTextArea.getText()+ "\n";
-        chatTextArea.setText(message);
+       // Platform.runLater(() ->{
+            chatTextArea.setText(message);
+            int receiverPort=this.receiver.getPort();
+            peerClient2.client(message, receiverPort);
 
-        try {
-            peerClientThread.sleep(1000);
-            peerClient.setMessage(message);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+      //  });
+
+
+
+//        try {
+//            peerClientThread.sleep(1000);
+//            peerClient.setMessage(message);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
 
         // message should be displayed on the sender screen,
@@ -64,5 +84,10 @@ public class ChatController {
 
     public void setReceiver(User receiver) {
         this.receiver = receiver;
+    }
+
+    public void setPeerResponse(String peerResponse) {
+        this.peerResponse = peerResponse;
+        chatTextArea.setText(peerResponse);
     }
 }

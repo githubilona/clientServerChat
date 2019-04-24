@@ -21,7 +21,7 @@ public class PeerClient implements Runnable {
     public PeerClient() {
         try {
             this.inetAddress = InetAddress.getLocalHost();
-            this.datagramSocket = new DatagramSocket();
+            this.datagramSocket = new DatagramSocket(PORT);
            // this.message=message;
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -41,7 +41,7 @@ public class PeerClient implements Runnable {
                 if(message!=null){
                     System.out.println("Message ! = null ");
                     send();
-                    //receive();
+                    receive();
                 }
             }
         } catch (IOException e) {

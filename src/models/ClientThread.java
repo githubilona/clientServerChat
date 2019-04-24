@@ -148,6 +148,7 @@ public class ClientThread extends Thread {
 
                        //loginController.setLoginResultMessage(messageFromServer);
                         // UserController.getInstance().setUserList(messageFromServer);
+                        System.out.println("login result mesage in client thread  " + messageFromServer.getUser().getPort());
                         LoginController.getInstance().setLoginResultMessage(messageFromServer);
                         break;
                     case LOGIN_FAILED:
@@ -165,6 +166,7 @@ public class ClientThread extends Thread {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+
                         UserController.getInstance().setUserList(messageFromServer);
                         System.out.println("                        client  case UPDATE_USER_LIST:");
                         break;

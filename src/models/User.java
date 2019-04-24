@@ -7,6 +7,7 @@ import java.util.Objects;
  * Since Message class implements Serializable, User class also have to, because User is parameter in Message constructor
  */
 public class User implements Serializable {
+    // TODO final ?
     private String username;
     private String password;
     private Status status;
@@ -15,7 +16,7 @@ public class User implements Serializable {
     // TODO date of birth
     // TODO gender
     private String photo;
-
+    private int port;
 
     public User(String username, String password, Status status) {
         this.username = username;
@@ -70,6 +71,14 @@ public class User implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     @Override

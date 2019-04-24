@@ -79,9 +79,7 @@ public class LoginController {
     }
 
     public void setLoginResultMessage(Message loginResultMessage) {
-        System.out.println("            setLoginResultMessage");
         this.loginResultMessage= loginResultMessage;
-        System.out.println(loginResultMessage.getMessageType() + "//././././././././././././././././././././/./././");
     }
 
     public Message getLoginResultMessage() {
