@@ -8,8 +8,6 @@ public class Message implements Serializable {
     private User user;
     private MessageType messageType;
     private HashMap<String, User> usersHashMap =new HashMap<>();
-   // private RegisterController registerController;
-
 
     public Message() {
 
@@ -22,11 +20,7 @@ public class Message implements Serializable {
         this.user=user;
         this.messageType=messageType;
     }
-//    public Message(User user, MessageType messageType, RegisterController registerController ) {
-//        this.user=user;
-//        this.messageType=messageType;
-//        this.registerController=registerController;
-//    }
+
     public Message(MessageType messageType, HashMap<String, User> usersHashMap ){
         this.messageType=messageType;
         this.usersHashMap = usersHashMap;
@@ -62,15 +56,6 @@ public class Message implements Serializable {
         this.usersHashMap = usersHashMap;
     }
 
-//    public RegisterController getRegisterController() {
-//        return registerController;
-//    }
-//
-//    public void setRegisterController(RegisterController registerController) {
-//        this.registerController = registerController;
-//    }
-
-    // _________________________
     public ArrayList<User> getUsers() {
         return new ArrayList<>(usersHashMap.values());
     }

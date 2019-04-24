@@ -10,14 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.*;
-
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class LoginController {
-    @FXML private Button loginButton;
     @FXML private TextField usernameTextField;
     @FXML private TextField passwordTextField;
 
@@ -62,7 +58,6 @@ public class LoginController {
             System.out.println("                loginResultMessage!=null");
         }
 
-// _________________________________________________ open user Frame if entered login data was correct
        if(loginResultMessage.getMessageType().equals(MessageType.LOGIN_SUCCESSFULL)){
             Parent parent = FXMLLoader.load(getClass().getResource("../views/userView.fxml"));
             Scene scene = new Scene(parent);
@@ -70,7 +65,7 @@ public class LoginController {
             stage.setScene(scene);
             stage.show();
 
-           clientThread.setMessageToServer(new Message(loginResultMessage.getUser(), MessageType.UPDATE_USER_LIST));
+         //  clientThread.setMessageToServer(new Message(loginResultMessage.getUser(), MessageType.UPDATE_USER_LIST));
        }else {
            //TODO display information in login frame, that username or password is incorrect
            System.out.println("username or password is incorrect");

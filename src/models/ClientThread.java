@@ -3,7 +3,6 @@ package models;
 import controllers.LoginController;
 import controllers.RegisterController;
 import controllers.UserController;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -70,10 +69,9 @@ public class ClientThread extends Thread {
             System.out.println("connected+++++++++++++++");
 
             while(socket.isConnected()){
-                    System.out.println("----------------------");
-                    writeToServer();
-                    readFromServer();
-
+                System.out.println("----------------------");
+                writeToServer();
+                readFromServer();
             }
 
         }catch (UnknownHostException e) {
@@ -81,35 +79,6 @@ public class ClientThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        try{
-
-//            Scanner scanner=new Scanner(System.in);
-//            String messageToServer;
-//            String serverRespone;
-//
-//            this.connect();
-//            System.out.println("connected");
-//            while(socket.isConnected()) { // read servers response
-//                Message message=(Message) objectInputStream.readObject(); // read message from the
-//
-//                System.out.println("Serveres meessage "+ message.getUser().getUsername());
-//                if ( message!= null) {
-//                    System.out.println("Serveres meessage "+ message.getUser().getUsername());
-//                }
-//            }
-//
-//            do {
-//                System.out.println("Enter a message ");
-//                messageToServer=scanner.nextLine();
-//                output.println(messageToServer);
-//
-//
-////            }while(!messageToServer.equals("exit"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
 
     /**
@@ -160,17 +129,7 @@ public class ClientThread extends Thread {
                 System.out.println(messageFromServer.getMessageType() + "@@@@@@@@@");
                 switch (messageFromServer.getMessageType()) {
                     case USER_REGISTERED:
-//                    FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("models/registerView.fxml"));
-//                    fmxlLoader.setLocation(getClass().getResource("models/registerView.fxml"));
-//                    registerController = fmxlLoader.<RegisterController>getController();
-//                        Dialog<ButtonType> dialog = new Dialog<>();
-//                    FXMLLoader loader = new FXMLLoader();
-//                    loader.setLocation(getClass().getResource("/models/registerView.fxml"));
-//                        dialog.getDialogPane().setContent(loader.load());
-////                    Parent root = loader.load(getClass().getResource("/models/registerView.fxml"));
-//                    RegisterController registerController = loader.getController();
-//                        registerController=messageToServer.getRegisterController();
-                    registerController.updateFrame(MessageType.USER_REGISTERED);
+                        registerController.updateFrame(MessageType.USER_REGISTERED);
                         System.out.println(" registerController=messageToServer.getRegisterController();");
                         System.out.println("USER_REGISTERED");
                         break;
@@ -184,17 +143,6 @@ public class ClientThread extends Thread {
                         System.out.println("USER_NOT_REGISTERED_DUPLICATE");
                         break;
                     case LOGIN_SUCCESSFULL:
-//                        Platform.runLater(() ->{
-//                            Parent root = null;
-//                            try {
-//                                root = FXMLLoader.load(getClass().getResource("userView.fxml"));
-//                                stage.setScene(new Scene(root));
-//                                stage.show();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        });
                         // message from server contains list of users
                        // loginController.showUserFrame(messageFromServer);
 
@@ -207,7 +155,7 @@ public class ClientThread extends Thread {
                         break;
                     case UPDATE_USER_LIST:
                         System.out.println("5555555555555555555555555555555555555555555555");
-                        // TODO fix Thread.sleep
+                        // TODO resolve Thread.sleep
                         // I'm using Thread.sleep here, becouse before updating ListView in UserCOntroller
                         // user Frame has to be initialized. So to prevent NullPointerException
                         // when frame components (listView etc) are not set yet, program has to wait until user scene

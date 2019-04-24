@@ -13,7 +13,6 @@ import java.util.List;
  *  4.04.19 21:47 HashMap has to be static, otherwise useras are not saved to HashMAp
  */
 public class Server {
-    private List<ClientThread> clientThreads = new ArrayList<>();
     private static HashMap<String, User> usersHashMap=new HashMap<>();
     private static HashSet<ObjectOutputStream> writers = new HashSet<>();
 
@@ -37,14 +36,6 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public List<ClientThread> getClientThreads() {
-        return clientThreads;
-    }
-
-    public void setClientThreads(List<ClientThread> clientThreads) {
-        this.clientThreads = clientThreads;
     }
 
     public HashMap<String, User> getUsersHashMap() {

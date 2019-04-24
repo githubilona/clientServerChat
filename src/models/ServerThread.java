@@ -40,32 +40,6 @@ public class ServerThread  extends Server implements Runnable {
                 while (socket.isConnected()){
                     readFromClient();
                 }
-
-//                while(socket.isConnected()){
-//                    Message clientMessage = (Message) objectInputStream.readObject();
-//
-//
-//                    if(clientMessage!=null){
-//                        System.out.println("CLient meaasage:          "+clientMessage.getUser().getUsername() );
-//                        writeToAll(clientMessage);
-//
-//                    }
-//                    switch(clientMessage.getMessageType()){
-//                        case REGISTER:
-//                            checkDuplicateUsername(clientMessage);
-//                            break;
-//
-//                    }
-//
-//                }
-//                while(true){
-//
-//                    Message clientMessage = (Message) objectInputStream.readObject();
-//                    String recivedMessageFromClient =  input.readLine();
-//                    System.out.println("Recived message from  client "+ clientMessage.getUser().getUsername());
-//                    System.out.println("_________________________ bla");
-//                    output.println("output printl  "+ recivedMessageFromClient);
-//                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
