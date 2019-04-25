@@ -20,16 +20,22 @@ import java.util.List;
 
 public class UserController {
 
-    @FXML private ListView<User> listView;
-    @FXML private Label usernameLabel;
-    @FXML private ImageView imageView;
-    @FXML private Button selectButton;
+    @FXML
+    private ListView<User> listView;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private ImageView imageView;
+    @FXML
+    private Button selectButton;
     private ObservableList<User> observableList;
     private Message messageFromServer;
     private static UserController instance; // =new UserController();
+
     public UserController() {
         instance = this;
     }
+
     public static UserController getInstance() {
         return instance;
     }
@@ -37,37 +43,44 @@ public class UserController {
     // initalize vs constructor- constructor -> recognizing @FXML annotations -> initalize()
     // so initalizing via constructor will not recognize @FXML annotations
     @FXML
-    public void initialize(){
+    public void initialize() {
         messageFromServer = LoginController.getInstance().getLoginResultMessage();
         List<User> users = messageFromServer.getUsers();
         observableList = FXCollections.observableArrayList(users);
         listView.setItems(observableList);
 
+        User sender = messageFromServer.getUser();
+        PeerServer2 peerServer2 = new PeerServer2();
+        System.out.println("sender port " + sender.getPort());
+        peerServer2.setPort(sender.getPort());
+        Thread peerServerThread2 = new Thread(peerServer2);
+        peerServerThread2.start();
         // listView holds User objects, so toString() is called to display User in each tableView field
         // by default toString() returns set of digits and characters which describe object, so overriding toString in user class,
         // to return String username instead of User object will solve that problem
     }
 
     @FXML
-    public void handleClickListView(){
+    public void handleClickListView() {
         User user = listView.getSelectionModel().getSelectedItem();
         usernameLabel.setText(user.getUsername());
         imageView.setImage(new Image(user.getPhoto()));
-        System.out.println("Selected user : "+user.getUsername() + " port : " + user.getPort());
+        System.out.println("Selected user : " + user.getUsername() + " port : " + user.getPort());
     }
+
     @FXML
-    public void selectButtonAction(ActionEvent event){
+    public void selectButtonAction(ActionEvent event) {
         User selectedUser = listView.getSelectionModel().getSelectedItem();
         User sender = messageFromServer.getUser();
         new NewFrame("views/chatView.fxml", selectedUser.getUsername(), 800, 600);
         ChatController.getInstance().setReceiver(selectedUser);
         ChatController.getInstance().setSender(sender);
 
-        PeerServer2 peerServer2 = new PeerServer2();
-        System.out.println("receiver port "+ selectedUser.getPort() + "sender port "+ sender.getPort());
-        peerServer2.setPort(sender.getPort());
-              Thread peerServerThread2 = new Thread(peerServer2);
-        peerServerThread2.start();
+//        PeerServer2 peerServer2 = new PeerServer2();
+//        System.out.println("receiver port "+ selectedUser.getPort() + "sender port "+ sender.getPort());
+//        peerServer2.setPort(sender.getPort());
+//              Thread peerServerThread2 = new Thread(peerServer2);
+//        peerServerThread2.start();
 //        try {
 //            Parent parent = FXMLLoader.load(getClass().getResource("/views/chatView.fxml"));
 //            Scene scene = new Scene(parent);

@@ -65,7 +65,7 @@ public class LoginController {
             stage.setScene(scene);
             stage.show();
 
-         //  clientThread.setMessageToServer(new Message(loginResultMessage.getUser(), MessageType.UPDATE_USER_LIST));
+         //  clientThread.setMessageToServer(new Message(loginResultMessage.getSender(), MessageType.UPDATE_USER_LIST));
        }else {
            //TODO display information in login frame, that username or password is incorrect
            System.out.println("username or password is incorrect");

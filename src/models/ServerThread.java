@@ -168,7 +168,7 @@ public class ServerThread  extends Server implements Runnable {
                     break;
 //                case UPDATE_USER_LIST:
 //                    System.out.println("            write to alll update user list in sERVER ");
-//                    writeToAll(new Message(clientMesage.getUser(), MessageType.UPDATE_USER_LIST, super.getUsersHashMap()));
+//                    writeToAll(new Message(clientMesage.getSender(), MessageType.UPDATE_USER_LIST, super.getUsersHashMap()));
 //                    break;
             }
         }

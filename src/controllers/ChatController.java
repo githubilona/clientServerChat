@@ -8,6 +8,8 @@ import models.*;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatController {
 
@@ -22,6 +24,7 @@ public class ChatController {
     private User sender;
     private User receiver;
     private String peerResponse;
+    private List<ChatMessage> chatMessages= new ArrayList<>();
 
     private static ChatController instance;
 
@@ -47,12 +50,17 @@ public class ChatController {
 
     @FXML
     public void sendButtonAction(){
-        System.out.println("send msg button ");
-        String message= chatTextArea.getText() +"\n" + sender.getUsername() + ":\t" + sendMessageTextArea.getText()+ "\n";
+        System.out.println("send msg button " + sender + " port : " + sender.getPort());
+      //  System.out.println("Sender      ---   " + sender.getUsername()  +   "port  " + sender.getPort());
+        String message= chatTextArea.getText() +" " + sender.getUsername() + ":\t" + sendMessageTextArea.getText()+ "\n";
        // Platform.runLater(() ->{
             chatTextArea.setText(message);
             int receiverPort=this.receiver.getPort();
             peerClient2.client(message, receiverPort);
+            chatMessages.add(new ChatMessage(message, sender, receiver));
+            for(ChatMessage m:chatMessages){
+                System.out.println(" .,.,.,.,.,.,.,.,.,.   "+ m.getMessage() + "  " + m.getDate() + "  "+ m.getReceiver() + m.getSender());
+            }
 
       //  });
 

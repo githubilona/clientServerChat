@@ -20,22 +20,22 @@ public class PeerServer2 implements Runnable{
         try {
             DatagramSocket socket = new DatagramSocket(port);
 
-              while(true) {
-            byte[] buffer = new byte[50];
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-            System.out.println("Server receive ... ");
-            socket.receive(packet);
-            String response = new String(buffer, 0, packet.getLength());
-            System.out.println("Server: Text received is: " + response);
-            ChatController.getInstance().setPeerResponse(response);
+            while(true) {
+                byte[] buffer = new byte[200];  // TODO fix size
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                System.out.println("Server receive ... ");
+                socket.receive(packet);
+                String response = new String(buffer, 0, packet.getLength());
+                System.out.println("Server: Text received is: " + response);
+                ChatController.getInstance().setPeerResponse(response);
 
-            String returnString = "echo: " + new String(buffer, 0, packet.getLength());
-            byte[] buffer2 = returnString.getBytes();
-            InetAddress address = packet.getAddress();
-            int port = packet.getPort();
-            packet = new DatagramPacket(buffer2, buffer2.length, address, port);
-            socket.send(packet);
-              }
+    //            String returnString = "echo: " + new String(buffer, 0, packet.getLength());
+    //            byte[] buffer2 = returnString.getBytes();
+    //            InetAddress address = packet.getAddress();
+    //            int port = packet.getPort();
+    //            packet = new DatagramPacket(buffer2, buffer2.length, address, port);
+    //            socket.send(packet);-
+            }
 
         } catch(SocketException e) {
             System.out.println("SocketException: " + e.getMessage());

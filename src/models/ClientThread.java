@@ -182,7 +182,7 @@ public class ClientThread extends Thread {
 ////                        // client has joinde
 ////
 ////                        Platform.runLater(() ->{
-////                        System.out.println(messageFromServer.getUser() + " "+ messageFromServer.getMessageType());
+////                        System.out.println(messageFromServer.getSender() + " "+ messageFromServer.getMessageType());
 ////                        LoginController.getInstance().setUpdateUserListMessage(messageFromServer);
 ////                      // UserController.getInstance().setUserList(messageFromServer);
 //////                        UserController.getInstance().setObservableList(messageFromServer.getUsersHashMap());

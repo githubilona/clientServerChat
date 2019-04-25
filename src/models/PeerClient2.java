@@ -9,7 +9,7 @@ import java.net.SocketTimeoutException;
 public class PeerClient2 {
   //  private int receiverPort;
 
-    public String client(String message, int receiverPort){
+    public void client(String message, int receiverPort){
         try {
             InetAddress address = InetAddress.getLocalHost();  // getByName()
             DatagramSocket datagramSocket = new DatagramSocket();
@@ -26,12 +26,12 @@ public class PeerClient2 {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, receiverPort);
             datagramSocket.send(packet);
 
-            byte[] buffer2 = new byte[50];
-            packet = new DatagramPacket(buffer2, buffer2.length);
-            datagramSocket.receive(packet);
-            String recivedMessage =new String(buffer2, 0, packet.getLength());
-            System.out.println("Client: Text received is: " + recivedMessage );
-            return recivedMessage;
+//            byte[] buffer2 = new byte[50];
+//            packet = new DatagramPacket(buffer2, buffer2.length);
+//            datagramSocket.receive(packet);
+//            String recivedMessage =new String(buffer2, 0, packet.getLength());
+//            System.out.println("Client: Text received is: " + recivedMessage );
+           // return recivedMessage;
 
             // } while(!echoString.equals("exit"));
 
@@ -40,6 +40,6 @@ public class PeerClient2 {
         } catch(IOException e) {
             System.out.println("Client error: " + e.getMessage());
         }
-        return null;
+     //   return null;
     }
 }
