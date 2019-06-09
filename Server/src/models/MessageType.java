@@ -1,0 +1,11 @@
+package models;
+
+// TODO FIX typo SUCCESSFULL _> SUCCESSFUL
+
+/**
+ * Message types that client or server can send or receive
+ */
+public enum MessageType {
+    USER_REGISTERED, USER_NOT_REGISTERED, USER_NOT_REGISTERED_DUPLICATE,USER_NOT_REGISTERED_WRONG_FORMAT, REGISTER, LOGIN,
+    LOGIN_SUCCESSFULL, LOGIN_FAILED, UPDATE_USER_LIST;
+}

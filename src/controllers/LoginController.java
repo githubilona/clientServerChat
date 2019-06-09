@@ -28,6 +28,11 @@ public class LoginController {
         return instance;
     }
 
+    /**
+     * Invoked when login button was pressed
+     * @param event login button was pressed
+     * @throws IOException
+     */
     @FXML
     public void loginAction(ActionEvent event) throws IOException {
         String username=usernameTextField.getText().trim();
@@ -72,12 +77,19 @@ public class LoginController {
        }
     }
 
+    /**
+     * Invoked when a user wants to create a new account. Register frame is shown.
+     */
     @FXML
     public void registerAction(){
         new NewFrame("views/registerView.fxml","Register", 500, 400);
-
     }
 
+    /**
+     * Sets loginResultMessage value (LOGIN_SUCCESSFUL or LOGIN_FAILED) to the this class field
+     * @param loginResultMessage Message containing information with LOGIN_SUCCESSFUL-password and username were correct
+     *                           or LOGIN_FAILED-user with entered username and password wasn't found in server's user list.
+     */
     public void setLoginResultMessage(Message loginResultMessage) {
         this.loginResultMessage= loginResultMessage;
     }

@@ -16,12 +16,16 @@ public class PeerServer2 implements Runnable{
     public void run() {
         server();
     }
+
+    /**
+     *  h
+     */
     public void server(){
         try {
             DatagramSocket socket = new DatagramSocket(port);
 
             while(true) {
-                byte[] buffer = new byte[200];  // TODO fix size
+                byte[] buffer = new byte[Integer.MAX_VALUE];  // TODO fix size find max size
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 System.out.println("Server receive ... ");
                 socket.receive(packet);

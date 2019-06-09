@@ -17,7 +17,12 @@ import models.User;
 
 import java.util.List;
 
-
+/**
+ * Singleton class
+ * Handles actions invoked on userView
+ * Displays the list of currently logged in users, enabling another user to select a person that he/she wants to chat with
+ *
+ */
 public class UserController {
 
     @FXML
@@ -42,6 +47,12 @@ public class UserController {
 
     // initalize vs constructor- constructor -> recognizing @FXML annotations -> initalize()
     // so initalizing via constructor will not recognize @FXML annotations
+
+    /**
+     * Initializes a chat frame by setting a user list
+     * Configuring this logged user to act as a server in peer to peer model by assigning a port
+     * Then the peer server starts working
+     */
     @FXML
     public void initialize() {
         messageFromServer = LoginController.getInstance().getLoginResultMessage();
@@ -60,6 +71,9 @@ public class UserController {
         // to return String username instead of User object will solve that problem
     }
 
+    /**
+     * Display information(image, name) about selected user form the list
+     */
     @FXML
     public void handleClickListView() {
         User user = listView.getSelectionModel().getSelectedItem();
@@ -68,6 +82,10 @@ public class UserController {
         System.out.println("Selected user : " + user.getUsername() + " port : " + user.getPort());
     }
 
+    /**
+     * Open a chat frame to be able to chat with selected user
+     * @param event select button was pressed
+     */
     @FXML
     public void selectButtonAction(ActionEvent event) {
         User selectedUser = listView.getSelectionModel().getSelectedItem();

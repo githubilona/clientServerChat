@@ -25,7 +25,7 @@ public class PeerClient2 {
 
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, receiverPort);
             datagramSocket.send(packet);
-            System.out.println("Client packet sent !!!!!!!!!!!!!!!!!1");
+            System.out.println("Client packet sent !!!!!!!!!!!!");
 //            byte[] buffer2 = new byte[50];
 //            packet = new DatagramPacket(buffer2, buffer2.length);
 //            datagramSocket.receive(packet);

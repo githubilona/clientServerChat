@@ -2,29 +2,27 @@ package models;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ServerThread  extends Server implements Runnable {
     private Socket socket;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
-    private List<ClientThread> clients = new ArrayList<>();
-   // private HashMap<String, User> usersHashMap=super.getUsersHashMap();
+   // private List<ClientThread> clients = new ArrayList<>();
+   // private HashMap<String, models.User> usersHashMap=super.getUsersHashMap();
    private Message clientMesage;
 
     public ServerThread(Socket socket){
         this.socket=socket;
-        System.out.println("Server thread constructor");
+        System.out.println("models.Server thread constructor");
 
 
     }
 
     @Override
     public void run() {
-        System.out.println("Server thread run()");
+        System.out.println("models.Server thread run()");
 
         try{
 
@@ -55,6 +53,11 @@ public class ServerThread  extends Server implements Runnable {
     }
     // TODO correct repeating try catch blocks
 
+    /**
+     *
+     * @param message
+     * @return
+     */
     public boolean checkDuplicateUsername(Message message) {
         if(!super.getUsersHashMap().containsKey(message.getUser().getUsername()) ){
             for(String username : super.getUsersHashMap().keySet()){
@@ -62,7 +65,7 @@ public class ServerThread  extends Server implements Runnable {
             }
             return false;
         }else{
-            String exceptionMessage ="User "+message.getUser().getUsername() +" already exists";
+            String exceptionMessage ="models.User "+message.getUser().getUsername() +" already exists";
             System.out.println(exceptionMessage);
                 // TODO send why registration didn't succeed - wrong format or duplicate username
                 // TODO if checkDuplicateUsername returns true- registration didn't succeed  becouse of duplicate
@@ -132,7 +135,7 @@ public class ServerThread  extends Server implements Runnable {
             e.printStackTrace();
         }
         if(clientMesage!=null){
-            System.out.println("Server " + clientMesage.getMessageType()+ " user "+ clientMesage.getUser().getUsername());
+            System.out.println("models.Server " + clientMesage.getMessageType()+ " user "+ clientMesage.getUser().getUsername());
             switch(clientMesage.getMessageType()){
                 case REGISTER:
                     boolean format=checkFormat(clientMesage);
@@ -168,7 +171,7 @@ public class ServerThread  extends Server implements Runnable {
                     break;
 //                case UPDATE_USER_LIST:
 //                    System.out.println("            write to alll update user list in sERVER ");
-//                    writeToAll(new Message(clientMesage.getSender(), MessageType.UPDATE_USER_LIST, super.getUsersHashMap()));
+//                    writeToAll(new models.Message(clientMesage.getSender(), models.MessageType.UPDATE_USER_LIST, super.getUsersHashMap()));
 //                    break;
             }
         }
@@ -192,7 +195,7 @@ public class ServerThread  extends Server implements Runnable {
         }
         return clientMesage;
     }
-
+/*
     public void addClient(ClientThread client){
         this.clients.add(client);
     }
@@ -204,4 +207,5 @@ public class ServerThread  extends Server implements Runnable {
     public void setClients(List<ClientThread> clients) {
         this.clients = clients;
     }
+*/
 }

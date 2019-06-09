@@ -1,0 +1,28 @@
+#chatBox{
+    -fx-background-color:pink;
+    -fx-font-size:18px;
+
+}
+
+#label{
+
+  -fx-background-color:#73AD21;
+  -fx-text-fill:white;
+  -fx-background-radius: 15 15 15 15;
+  -fx-padding: 20px;
+  -fx-wrap-text: true;
+
+
+  /*-fx-pref-width:200px;
+  -fx-alignment: top-left;
+  */
+
+}
+
+#labelResponse{
+  -fx-background-color:orange;
+  -fx-text-fill:white;
+  -fx-background-radius: 15 15 15 15;
+  -fx-padding: 20px;
+  -fx-wrap-text: true;
+}
