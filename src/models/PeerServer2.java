@@ -25,7 +25,7 @@ public class PeerServer2 implements Runnable{
             DatagramSocket socket = new DatagramSocket(port);
 
             while(true) {
-                byte[] buffer = new byte[Integer.MAX_VALUE];  // TODO fix size find max size
+                byte[] buffer = new byte[1000*1000*1000];  // TODO fix size find max size
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 System.out.println("Server receive ... ");
                 socket.receive(packet);

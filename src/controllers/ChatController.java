@@ -41,6 +41,7 @@ public class ChatController {
     private  VBox chatBox = new VBox(5);
     private List<Label> messages = new ArrayList<>();
     private int index = 0;
+    private VBox chat;
 
 
     private static ChatController instance;
@@ -50,6 +51,15 @@ public class ChatController {
     }
     public void initialize(){
         peerClient2 = new PeerClient2();
+       // scrollPane.setFitToHeight(true);
+     //   scrollPane.setPrefSize(600, 400);
+     //   scrollPane.setContent(chatBox);
+
+        scrollPane.setPrefSize(600, 300);
+        chat = new VBox();
+       // chat.setSpacing(10);
+        scrollPane.setContent(chat);
+
       //  scrollPane.setVvalue(1.0);
 //        peerClient = new PeerClient();
 //        peerServer = new PeerServer();
@@ -64,62 +74,78 @@ public class ChatController {
 //        peerServerThread2.start();
 
     }
+    public HBox addMessage(String message)
+    {
+        HBox hbox = new HBox();
+        Label label = new Label(message);
+        label.setId("label");
+        label.setWrapText(true);
+        label.setMaxWidth(500);
+        messages.add(label);
+        hbox.setAlignment(Pos.BASELINE_RIGHT);
+        hbox.getChildren().add(label);
 
+        return hbox;
+    }
+    public HBox addResponseMessage(String message)
+    {
+        HBox hbox = new HBox();
+        Label label = new Label(message);
+        label.setId("labelResponse");
+        label.setWrapText(true);
+        label.setMaxWidth(500);
+        messages.add(label);
+        hbox.setAlignment(Pos.CENTER_LEFT);
+       //  hbox.setAlignment(Pos.BASELINE_LEFT);
+        hbox.getChildren().add(label);
+
+        return hbox;
+    }
     @FXML
     public void sendButtonAction(){
         System.out.println("send msg button " + sender + " port : " + sender.getPort());
-      //  System.out.println("Sender      ---   " + sender.getUsername()  +   "port  " + sender.getPort());
         String message=  sender.getUsername() + ":\t" + sendMessageTextArea.getText()+ "\n";
-        System.out.println(message);
-       // Platform.runLater(() ->{
-            // chatBox.setText(message);
-            int receiverPort=this.receiver.getPort();
-            peerClient2.client(message, receiverPort);
-            chatMessages.add(new ChatMessage(message, sender, receiver));
+
+        int receiverPort=this.receiver.getPort();
+        peerClient2.client(message, receiverPort);
+        chatMessages.add(new ChatMessage(message, sender, receiver));
 
 
+        Platform.runLater(() -> {
+            chat.setSpacing(10);
+            chat.getChildren().add(addMessage(message));
+        });
 
-        Label label =new Label(message);
+
+       /* Label label =new Label(message);
         label.setId("label");
-        messages.add(label);
-        //chatBox.getChildren().add(label);
+        label.setWrapText(true);
+        label.setMaxWidth(500);
+        messages.add(label);*/
 
-        System.out.println("index  " + index);
-  /*      if(index%2==0){
-
-            messages.get(index).setAlignment(Pos.CENTER_LEFT);
-            System.out.println("1");
-
-        }else{
-
-            messages.get(index).setAlignment(Pos.CENTER_RIGHT);
-            System.out.println("2");
-
-        }
-
-*/
-        HBox hBox=new HBox();
+    /*    HBox hBox=new HBox();
         hBox.getChildren().add(messages.get(index));
         hBox.setAlignment(Pos.BASELINE_RIGHT);
         chatBox.getChildren().add(hBox);
-        chatBox.setSpacing(10);
+        chatBox.setSpacing(10); */
 
        // messages.get(index).setAlignment(Pos.CENTER_RIGHT);
 
 
-        messages.get(index).setWrapText(true);
+       // messages.get(index).setWrapText(true);
+
        // Platform.runLater(() ->{
        // chatBox.getChildren().add(messages.get(index));
-        System.out.println(messages.get(index).getText() + "label ettx");
+//        System.out.println(messages.get(index).getText() + "label ettx");
             //chatBox.getChildren().add(label);
            // chatBox.getChildren().add(label2);
             //chatBox.getChildren().add(label3);
       //  });
         index++;
 
-            for(ChatMessage m:chatMessages){
-                System.out.println(" .,.,.,.,.,.,.,.,.,.   "+ m.getMessage() + "  " + m.getDate() + "  "+ m.getReceiver() + m.getSender());
-            }
+       //     for(ChatMessage m:chatMessages){
+        //        System.out.println(" .,.,.,.,.,.,.,.,.,.   "+ m.getMessage() + "  " + m.getDate() + "  "+ m.getReceiver() + m.getSender());
+          //  }
 
       //  });
 
@@ -153,17 +179,16 @@ public class ChatController {
         this.receiver = receiver;
     }
 
-
     public void setPeerResponse(String peerResponse) {
         this.peerResponse = peerResponse;
         System.out.println(peerResponse + " peer REsponse" + this.peerResponse);
-        Label labelResponse = new Label();
+      /* Label labelResponse = new Label();
         labelResponse.setId("labelResponse");
         labelResponse.setText(this.peerResponse + "     response ");
         labelResponse.setAlignment(Pos.CENTER_RIGHT);
-        labelResponse.setWrapText(true);
+        labelResponse.setWrapText(true);*/
         Platform.runLater(() ->{
-            chatBox.getChildren().add(labelResponse);
+            chat.getChildren().add(addResponseMessage(this.peerResponse));
         });
 
     }
