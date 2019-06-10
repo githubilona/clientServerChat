@@ -154,6 +154,7 @@ public class ServerThread  extends Server implements Runnable {
                     }
                     break;
                 case LOGIN:
+
                     super.setPort(super.getPort());
                     clientMesage.getUser().setPort(super.getPort());
                     boolean isLogged =login(clientMesage);

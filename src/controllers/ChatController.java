@@ -65,16 +65,15 @@ public class ChatController {
         chat.setSpacing(7);
         scrollPane.setContent(chat);
 
+        // Invisible label to have chat bubbles aligned to edges of the scroll pane
         HBox hbox = new HBox();
         Label label = new Label("");
         label.setMinWidth(scrollWidth-20);
         hbox.setAlignment(Pos.BASELINE_RIGHT);
         hbox.getChildren().add(label);
         hbox.setVisible(false);
+        chat.getChildren().add(hbox);
 
-
-
-        //chat.getChildren().add(hbox);
 //        peerClient = new PeerClient();
 //        peerServer = new PeerServer();
 //        peerClientThread= new Thread(peerClient);
@@ -108,8 +107,6 @@ public class ChatController {
         messages.add(label);
         hbox.setAlignment(Pos.BASELINE_RIGHT);
         hbox.getChildren().add(label);
-
-      //  messagesHbox.add(hbox);
         return hbox;
     }
     public HBox addResponseMessage(String message)
@@ -134,7 +131,7 @@ public class ChatController {
 
         int receiverPort=this.receiver.getPort();
         peerClient2.client(message, receiverPort);
-        ChatMessage chatMessage=new ChatMessage(message, sender, receiver);
+        ChatMessage chatMessage=new ChatMessage(message, sender, receiver, ChatMessageType.MY_MESSAGE);
         chatMessages.add(chatMessage);
 
 
@@ -146,6 +143,7 @@ public class ChatController {
             chat.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
 
         });
+        saveMessage();
 
 
 
@@ -173,7 +171,7 @@ public class ChatController {
            // chatBox.getChildren().add(label2);
             //chatBox.getChildren().add(label3);
       //  });
-        index++;
+     //   index++;
 
        //     for(ChatMessage m:chatMessages){
         //        System.out.println(" .,.,.,.,.,.,.,.,.,.   "+ m.getMessage() + "  " + m.getDate() + "  "+ m.getReceiver() + m.getSender());
@@ -219,6 +217,8 @@ public class ChatController {
         labelResponse.setText(this.peerResponse + "     response ");
         labelResponse.setAlignment(Pos.CENTER_RIGHT);
         labelResponse.setWrapText(true);*/
+      ChatMessage message = new ChatMessage(peerResponse, sender, receiver, ChatMessageType.RESPONSE);
+      chatMessages.add(message);
       Platform.runLater(() ->{
           HBox response = addResponseMessage(this.peerResponse);
             chat.getChildren().add(response);
@@ -237,7 +237,7 @@ public class ChatController {
                 oos.writeObject(chatMessage);
                 oos.flush();
             }
-            readMeassage();
+           // readMeassage();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -270,13 +270,13 @@ public class ChatController {
 
 
         for(ChatMessage chatMessage : chatMessages){
-            if(chatMessage.getSender().getPort() == this.sender.getPort()){
+            if(chatMessage.getType().equals(ChatMessageType.MY_MESSAGE)){
                 chat.getChildren().add(addMessage(chatMessage.getMessage()));
             }else{
                 chat.getChildren().add(addResponseMessage(chatMessage.getMessage()));
             }
         }
-
+        chat.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
 
 
 

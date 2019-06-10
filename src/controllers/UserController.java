@@ -91,9 +91,10 @@ public class UserController {
     public void selectButtonAction(ActionEvent event) {
         User selectedUser = listView.getSelectionModel().getSelectedItem();
         User sender = messageFromServer.getUser();
-        new NewFrame("views/chatView.fxml", selectedUser.getUsername(), 800, 600);
+        NewFrame chatFrame = new NewFrame("views/chatView.fxml", selectedUser.getUsername(), 800, 600);
         ChatController.getInstance().setReceiver(selectedUser);
         ChatController.getInstance().setSender(sender);
+       // chatFrame.setChatFrameCloseAction();
         try {
             ChatController.getInstance().readMeassage();
         } catch (FileNotFoundException e) {
