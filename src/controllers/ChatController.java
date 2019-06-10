@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import models.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +37,15 @@ public class ChatController {
     private User receiver;
     private String peerResponse;
     private List<ChatMessage> chatMessages= new ArrayList<>();
+    private List<ChatMessage> chatMessages2= new ArrayList<>();
     @FXML
     private  VBox chatBox = new VBox(5);
     private List<Label> messages = new ArrayList<>();
+    private List<HBox> messagesHbox = new ArrayList<>();
     private int index = 0;
     private VBox chat;
-
+    private int scrollWidth=600;
+    private int scrollHeight=300;
 
     private static ChatController instance;
     public ChatController(){
@@ -55,12 +58,23 @@ public class ChatController {
      //   scrollPane.setPrefSize(600, 400);
      //   scrollPane.setContent(chatBox);
 
-        scrollPane.setPrefSize(600, 300);
+        scrollPane.setPrefSize(scrollWidth, scrollHeight);
+
         chat = new VBox();
-       // chat.setSpacing(10);
+
+        chat.setSpacing(7);
         scrollPane.setContent(chat);
 
-      //  scrollPane.setVvalue(1.0);
+        HBox hbox = new HBox();
+        Label label = new Label("");
+        label.setMinWidth(scrollWidth-20);
+        hbox.setAlignment(Pos.BASELINE_RIGHT);
+        hbox.getChildren().add(label);
+        hbox.setVisible(false);
+
+
+
+        //chat.getChildren().add(hbox);
 //        peerClient = new PeerClient();
 //        peerServer = new PeerServer();
 //        peerClientThread= new Thread(peerClient);
@@ -73,6 +87,16 @@ public class ChatController {
 //        Thread peerServerThread2 = new Thread(peerServer2);
 //        peerServerThread2.start();
 
+   /*     messagesHbox.add(addMessage("hello"));
+        messagesHbox.add(addResponseMessage("response hndjsj,vbwjhf"));
+        messagesHbox.add(addMessage("qwerty asdfghj zxcvbn"));
+        // scroll down after adding a message
+       // chat.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
+
+        for(HBox hbox2 : messagesHbox){
+            chat.getChildren().add(hbox2);
+        }
+*/
     }
     public HBox addMessage(String message)
     {
@@ -80,11 +104,12 @@ public class ChatController {
         Label label = new Label(message);
         label.setId("label");
         label.setWrapText(true);
-        label.setMaxWidth(500);
+        label.setMaxWidth(scrollWidth-20);
         messages.add(label);
         hbox.setAlignment(Pos.BASELINE_RIGHT);
         hbox.getChildren().add(label);
 
+      //  messagesHbox.add(hbox);
         return hbox;
     }
     public HBox addResponseMessage(String message)
@@ -93,12 +118,13 @@ public class ChatController {
         Label label = new Label(message);
         label.setId("labelResponse");
         label.setWrapText(true);
-        label.setMaxWidth(500);
+        label.setMaxWidth(scrollWidth-20);
         messages.add(label);
-        hbox.setAlignment(Pos.CENTER_LEFT);
+        hbox.setAlignment(Pos.BASELINE_LEFT);
        //  hbox.setAlignment(Pos.BASELINE_LEFT);
         hbox.getChildren().add(label);
 
+      //  messagesHbox.add(hbox);
         return hbox;
     }
     @FXML
@@ -108,13 +134,19 @@ public class ChatController {
 
         int receiverPort=this.receiver.getPort();
         peerClient2.client(message, receiverPort);
-        chatMessages.add(new ChatMessage(message, sender, receiver));
+        ChatMessage chatMessage=new ChatMessage(message, sender, receiver);
+        chatMessages.add(chatMessage);
 
 
         Platform.runLater(() -> {
-            chat.setSpacing(10);
-            chat.getChildren().add(addMessage(message));
+            HBox hBox = addMessage(message);
+            chat.getChildren().add(hBox);
+            messagesHbox.add(hBox);
+            // scroll down after adding a message
+            chat.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
+
         });
+
 
 
        /* Label label =new Label(message);
@@ -187,9 +219,93 @@ public class ChatController {
         labelResponse.setText(this.peerResponse + "     response ");
         labelResponse.setAlignment(Pos.CENTER_RIGHT);
         labelResponse.setWrapText(true);*/
-        Platform.runLater(() ->{
-            chat.getChildren().add(addResponseMessage(this.peerResponse));
-        });
+      Platform.runLater(() ->{
+          HBox response = addResponseMessage(this.peerResponse);
+            chat.getChildren().add(response);
+            messagesHbox.add(response);
+            // scroll down after adding a message
+            chat.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
+      });
 
+    }
+    public  void saveMessage(){
+        String fileName= "C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\conversation.txt";
+        try(FileOutputStream fos = new FileOutputStream(fileName);
+            ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+
+            for (ChatMessage chatMessage : chatMessages) {
+                oos.writeObject(chatMessage);
+                oos.flush();
+            }
+            readMeassage();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void readMeassage() throws FileNotFoundException {
+        String fileName= "C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\conversation.txt";
+        FileInputStream fis = new FileInputStream(fileName);
+       ArrayList<ChatMessage> objectsList = new ArrayList<>();
+        boolean cont = true;
+        try{
+            ObjectInputStream input = new ObjectInputStream(fis);
+            while(cont){
+                ChatMessage obj = (ChatMessage)input.readObject();
+                if(obj != null)
+                    chatMessages.add(obj);
+                else
+                    cont = false;
+            }
+            System.out.println("retrived objects rom file : ");
+            for(ChatMessage chatMessage :chatMessages){
+                System.out.println("@@@@@" + chatMessage.getMessage());
+            }
+        }catch(Exception e){
+            //System.out.println(e.printStackTrace());
+        }
+
+
+        for(ChatMessage chatMessage : chatMessages){
+            if(chatMessage.getSender().getPort() == this.sender.getPort()){
+                chat.getChildren().add(addMessage(chatMessage.getMessage()));
+            }else{
+                chat.getChildren().add(addResponseMessage(chatMessage.getMessage()));
+            }
+        }
+
+
+
+
+
+
+
+
+
+/*
+        ChatMessage chatMessage;
+        try(ObjectInputStream ios = new ObjectInputStream(new FileInputStream(fileName))) {
+            while ((chatMessage = (ChatMessage) ios.readObject()) != null) {
+                System.out.println("ADD" + chatMessage.getMessage() + " " + chatMessage.getSender() + " "+ chatMessage.getReceiver());
+                chatMessages2.add(chatMessage);
+            }
+            System.out.println("EXIT FROM LOOP ");
+            for (ChatMessage chatMessage2 : chatMessages2) {
+                System.out.println("chatMessahe 2 !!!!!!!!!!!");
+                System.out.println("@@@@" +chatMessage2.getMessage() + " ");
+            }
+        } catch (EOFException e) {
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+      */
     }
 }

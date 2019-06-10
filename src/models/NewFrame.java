@@ -22,6 +22,7 @@ public class NewFrame {
             stage.setTitle(title);
             stage.setScene(new Scene(root, width, height));
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

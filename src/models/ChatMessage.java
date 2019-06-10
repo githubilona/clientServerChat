@@ -1,15 +1,16 @@
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ChatMessage {
+public class ChatMessage implements Serializable {
     private String message;
     private User sender;
     private User receiver;
     private LocalDateTime date;
-    private DateTimeFormatter formatter;
+    private transient DateTimeFormatter formatter;
 
     public ChatMessage(String message, User sender, User receiver) {
         this.message = message;

@@ -15,6 +15,7 @@ import models.NewFrame;
 import models.PeerServer2;
 import models.User;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -93,7 +94,11 @@ public class UserController {
         new NewFrame("views/chatView.fxml", selectedUser.getUsername(), 800, 600);
         ChatController.getInstance().setReceiver(selectedUser);
         ChatController.getInstance().setSender(sender);
-
+        try {
+            ChatController.getInstance().readMeassage();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 //        PeerServer2 peerServer2 = new PeerServer2();
 //        System.out.println("receiver port "+ selectedUser.getPort() + "sender port "+ sender.getPort());
 //        peerServer2.setPort(sender.getPort());
