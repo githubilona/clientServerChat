@@ -1,0 +1,11 @@
+// TODO  1. Sending a file in a conversation
+// TODO  2. Users settings- add first name, last name, avatar
+// TODO  3. Save registered users to a txt file after closing the app
+// TODO  4. When the user closes the app (server still running) and then the user wants to login again SocketException is thrown- port already in use
+// TODO  5. Display date when a message was sent
+// TODO  6. Rename peerClient2 to peerClient, delete unused classes, comments, code
+// TODO  7. JavaDoc
+// TODO  8. Confirm window when a user wants to close the app
+// TODO  9. New message notification
+
+

@@ -82,7 +82,7 @@ public class LoginController {
      */
     @FXML
     public void registerAction(){
-        new NewFrame("views/registerView.fxml","Register", 500, 400);
+        new NewFrame("views/registerView.fxml","Register", 700, 500);
     }
 
     /**

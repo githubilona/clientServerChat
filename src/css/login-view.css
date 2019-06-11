@@ -1,0 +1,7 @@
+
+#loginButton{
+/* -fx-background-color:linear-gradient(orange, magenta);*/
+    -fx-background-color:#00b4c1;
+    -fx-text-base-color:white;
+    -fx-font-weight:bold;
+}

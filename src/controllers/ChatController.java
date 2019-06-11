@@ -22,27 +22,15 @@ import java.util.List;
 
 public class ChatController {
 
-    @FXML private TextArea chatTextArea;
-   // @FXML private TextArea chatBox;
     @FXML private TextArea sendMessageTextArea;
-    @FXML private Button sendButton;
-    //@FXML private chatBox chatBox;
     @FXML private ScrollPane scrollPane;
-    private PeerClient peerClient;
-    private PeerServer2 peerServer2;
     private PeerClient2 peerClient2;
-    private Thread peerClientThread;
-    private Thread peerServerThread;
     private User sender;
     private User receiver;
     private String peerResponse;
     private List<ChatMessage> chatMessages= new ArrayList<>();
-    private List<ChatMessage> chatMessages2= new ArrayList<>();
-    @FXML
-    private  VBox chatBox = new VBox(5);
     private List<Label> messages = new ArrayList<>();
     private List<HBox> messagesHbox = new ArrayList<>();
-    private int index = 0;
     private VBox chat;
     private int scrollWidth=600;
     private int scrollHeight=300;
@@ -53,14 +41,13 @@ public class ChatController {
         instance=this;
 
     }
+
+    /**
+     * Starts PeerClient
+     */
     public void initialize(){
         peerClient2 = new PeerClient2();
-       // scrollPane.setFitToHeight(true);
-     //   scrollPane.setPrefSize(600, 400);
-     //   scrollPane.setContent(chatBox);
-       // fileName="C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\"+sender.getUsername()+".txt";
-       // File file = new File(fileName);
-        scrollPane.setPrefSize(scrollWidth, scrollHeight);
+       // scrollPane.setPrefSize(scrollWidth, scrollHeight);
 
         chat = new VBox();
 
@@ -75,32 +62,14 @@ public class ChatController {
         hbox.getChildren().add(label);
         hbox.setVisible(false);
         chat.getChildren().add(hbox);
-
-//        peerClient = new PeerClient();
-//        peerServer = new PeerServer();
-//        peerClientThread= new Thread(peerClient);
-//        peerServerThread = new Thread(peerServer);
-//        peerClientThread.start();
-//        peerServerThread.start();
-//         peerServer2 =new PeerServer2();
-//        peerServer2.setPort(1001);
-//         peerServer2.server();
-//        Thread peerServerThread2 = new Thread(peerServer2);
-//        peerServerThread2.start();
-
-   /*     messagesHbox.add(addMessage("hello"));
-        messagesHbox.add(addResponseMessage("response hndjsj,vbwjhf"));
-        messagesHbox.add(addMessage("qwerty asdfghj zxcvbn"));
-        // scroll down after adding a message
-       // chat.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
-
-        for(HBox hbox2 : messagesHbox){
-            chat.getChildren().add(hbox2);
-        }
-*/
     }
-    public HBox addMessage(String message)
-    {
+
+    /**
+     *
+     * @param message message to be placed on a chat label
+     * @return
+     */
+    public HBox addMessage(String message){
         HBox hbox = new HBox();
         Label label = new Label(message);
         label.setId("label");
@@ -147,7 +116,7 @@ public class ChatController {
 
         });
         saveMessage();
-
+        sendMessageTextArea.clear();
 
 
        /* Label label =new Label(message);

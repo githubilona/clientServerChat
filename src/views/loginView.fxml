@@ -7,6 +7,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
@@ -23,14 +25,23 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Log in" textFill="#eb1e8b" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+      <Label text="Log in" GridPane.columnIndex="1" GridPane.halignment="CENTER">
          <font>
             <Font name="Symbol" size="74.0" />
          </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#7537e5" />
+                  <Stop color="#7537e5" offset="0.007246376811594203" />
+                  <Stop color="#00bfff" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
       </Label>
       <TextField fx:id="usernameTextField" promptText="Username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <TextField fx:id="passwordTextField" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-      <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginAction" prefHeight="57.0" prefWidth="198.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginAction" prefHeight="57.0" prefWidth="198.0" stylesheets="@../css/login-view.css" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Hyperlink fx:id="registerHyperlink" onAction="#registerAction" prefHeight="29.0" prefWidth="243.0" text="Don't have an account? Register" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP">
          <font>
             <Font size="16.0" />

@@ -1,0 +1,69 @@
+#anchorPane{
+  /* -fx-background-color:#ffce30; */
+   -fx-font-size:18px;
+}
+#chatBox{
+   /* -fx-background-color:pink; */
+
+
+}
+
+#label{
+
+  -fx-background-color:#00b4c1;
+  -fx-text-fill:white;
+  -fx-background-radius: 15 15 15 15;
+  -fx-padding: 20px;
+  -fx-wrap-text: true;
+
+
+  /*-fx-pref-width:200px;
+  -fx-alignment: top-left;
+  */
+
+}
+
+#labelResponse{
+  -fx-background-color:#efefef;
+  -fx-text-fill:black;
+  -fx-background-radius: 15 15 15 15;
+  -fx-padding: 20px;
+  -fx-wrap-text: true;
+}
+#sendButton{
+    -fx-background-color:#00b4c1;
+    -fx-text-base-color:white;
+    -fx-font-weight:bold;
+}
+#sendButton:hover{
+    -fx-background-color:#00ccdb;
+    -fx-text-base-color:white;
+    -fx-font-weight:bold;
+}
+
+/* scroll pane styles  */
+.scroll-pane {
+   /* -fx-background-color: #00ccdb; */
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #ff54fb;
+    -fx-background-radius: 5em;
+}
