@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ChatController">
    <children>
-      <Button fx:id="sendButton" layoutX="628.0" layoutY="377.0" mnemonicParsing="false" onAction="#sendButtonAction" prefHeight="66.0" prefWidth="105.0" text="Button" />
+      <Button fx:id="sendButton" layoutX="628.0" layoutY="377.0" mnemonicParsing="false" onAction="#sendButtonAction" prefHeight="66.0" prefWidth="105.0" text="Send" />
       <TextArea fx:id="sendMessageTextArea" layoutX="85.0" layoutY="377.0" prefHeight="66.0" prefWidth="538.0" wrapText="true" />
       <ScrollPane fx:id="scrollPane" layoutX="10.0" layoutY="10.0" prefHeight="303.0" prefWidth="571.0">
          <content>

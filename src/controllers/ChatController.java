@@ -46,6 +46,7 @@ public class ChatController {
     private VBox chat;
     private int scrollWidth=600;
     private int scrollHeight=300;
+    private String fileName;
 
     private static ChatController instance;
     public ChatController(){
@@ -57,7 +58,8 @@ public class ChatController {
        // scrollPane.setFitToHeight(true);
      //   scrollPane.setPrefSize(600, 400);
      //   scrollPane.setContent(chatBox);
-
+       // fileName="C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\"+sender.getUsername()+".txt";
+       // File file = new File(fileName);
         scrollPane.setPrefSize(scrollWidth, scrollHeight);
 
         chat = new VBox();
@@ -124,6 +126,7 @@ public class ChatController {
       //  messagesHbox.add(hbox);
         return hbox;
     }
+
     @FXML
     public void sendButtonAction(){
         System.out.println("send msg button " + sender + " port : " + sender.getPort());
@@ -229,7 +232,8 @@ public class ChatController {
 
     }
     public  void saveMessage(){
-        String fileName= "C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\conversation.txt";
+       // fileName="C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\"+sender.getUsername()+".txt";
+
         try(FileOutputStream fos = new FileOutputStream(fileName);
             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 
@@ -247,8 +251,14 @@ public class ChatController {
     }
 
     public void readMeassage() throws FileNotFoundException {
-        String fileName= "C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\conversation.txt";
-        FileInputStream fis = new FileInputStream(fileName);
+      //  fileName="C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\"+sender.getUsername()+".txt";
+        File file = new File(fileName);
+        try {
+            file.createNewFile(); // if file already exists will do nothing
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FileInputStream fis = new FileInputStream(file);
        ArrayList<ChatMessage> objectsList = new ArrayList<>();
         boolean cont = true;
         try{
@@ -307,5 +317,13 @@ public class ChatController {
             e.printStackTrace();
         }
       */
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

@@ -31,7 +31,7 @@
       <TextField fx:id="usernameTextField" promptText="Username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <TextField fx:id="passwordTextField" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
       <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginAction" prefHeight="57.0" prefWidth="198.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <Hyperlink fx:id="registerHyperlink" onAction="#registerAction" prefHeight="29.0" prefWidth="243.0" text="Don't have account? Register" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP">
+      <Hyperlink fx:id="registerHyperlink" onAction="#registerAction" prefHeight="29.0" prefWidth="243.0" text="Don't have an account? Register" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP">
          <font>
             <Font size="16.0" />
          </font>

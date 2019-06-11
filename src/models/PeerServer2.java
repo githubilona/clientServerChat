@@ -21,9 +21,10 @@ public class PeerServer2 implements Runnable{
      *  h
      */
     public void server(){
-        try {
-            DatagramSocket socket = new DatagramSocket(port);
+        try(DatagramSocket socket = new DatagramSocket(port)) {
 
+// TODO close the socket, release the  port after closing the app window. Now if user closes the apps window, and then open its, logging in, the SocketExcep tion is thrown
+// TODO          SocketException: Address already in use: Cannot bind
             while(true) {
                 byte[] buffer = new byte[1000*1000*1000];  // TODO fix size find max size
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);

@@ -155,9 +155,9 @@ public class ServerThread  extends Server implements Runnable {
                     break;
                 case LOGIN:
 
-                    super.setPort(super.getPort());
+                   // super.setPort(super.getPort());     NOT NEEDED
                     clientMesage.getUser().setPort(super.getPort());
-                    boolean isLogged =login(clientMesage);
+                    boolean isLogged =login(clientMesage);  // chek if username and password are correct
                     System.out.println("CASE LOGIN in SERVER");
                     if(isLogged){
                         // Send the list of logged in users

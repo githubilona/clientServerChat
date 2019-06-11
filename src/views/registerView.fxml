@@ -29,7 +29,7 @@
       </Label>
       <TextField fx:id="usernameTextField" prefWidth="465.0" promptText="Username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <TextField fx:id="passwordTextField" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-      <Button fx:id="registerButton" mnemonicParsing="false" onAction="#registerAction" prefHeight="57.0" prefWidth="198.0" text="Create new account" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <Button fx:id="registerButton" mnemonicParsing="false" onAction="#registerAction" prefHeight="57.0" prefWidth="198.0" text="Create an account" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Label fx:id="errorLabel" alignment="TOP_CENTER" contentDisplay="TOP" prefHeight="21.0" prefWidth="547.0" textAlignment="CENTER" textFill="#c30e0e" visible="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
    </children>
 </GridPane>
