@@ -65,11 +65,11 @@ public class ChatController {
     }
 
     /**
-     *
-     * @param message message to be placed on a chat label
-     * @return
+     * Creates a hbox for sender message
+     * @param message message that will be placed on a chat label
+     * @return HBox containing a label with sender message
      */
-    public HBox addMessage(String message){
+    private HBox addMessage(String message){
         HBox hbox = new HBox();
         Label label = new Label(message);
         label.setId("label");
@@ -80,8 +80,13 @@ public class ChatController {
         hbox.getChildren().add(label);
         return hbox;
     }
-    public HBox addResponseMessage(String message)
-    {
+
+    /**
+     * Creates a hbox for response message
+     * @param message message that will be placed on a chat label
+     * @return HBox containing a label with response message
+     */
+    private HBox addResponseMessage(String message) {
         HBox hbox = new HBox();
         Label label = new Label(message);
         label.setId("labelResponse");
@@ -91,11 +96,13 @@ public class ChatController {
         hbox.setAlignment(Pos.BASELINE_LEFT);
        //  hbox.setAlignment(Pos.BASELINE_LEFT);
         hbox.getChildren().add(label);
-
-      //  messagesHbox.add(hbox);
         return hbox;
     }
 
+    /**
+     * Send message to the peer
+     *
+     */
     @FXML
     public void sendButtonAction(){
         System.out.println("send msg button " + sender + " port : " + sender.getPort());
@@ -119,48 +126,6 @@ public class ChatController {
         sendMessageTextArea.clear();
 
 
-       /* Label label =new Label(message);
-        label.setId("label");
-        label.setWrapText(true);
-        label.setMaxWidth(500);
-        messages.add(label);*/
-
-    /*    HBox hBox=new HBox();
-        hBox.getChildren().add(messages.get(index));
-        hBox.setAlignment(Pos.BASELINE_RIGHT);
-        chatBox.getChildren().add(hBox);
-        chatBox.setSpacing(10); */
-
-       // messages.get(index).setAlignment(Pos.CENTER_RIGHT);
-
-
-       // messages.get(index).setWrapText(true);
-
-       // Platform.runLater(() ->{
-       // chatBox.getChildren().add(messages.get(index));
-//        System.out.println(messages.get(index).getText() + "label ettx");
-            //chatBox.getChildren().add(label);
-           // chatBox.getChildren().add(label2);
-            //chatBox.getChildren().add(label3);
-      //  });
-     //   index++;
-
-       //     for(ChatMessage m:chatMessages){
-        //        System.out.println(" .,.,.,.,.,.,.,.,.,.   "+ m.getMessage() + "  " + m.getDate() + "  "+ m.getReceiver() + m.getSender());
-          //  }
-
-      //  });
-
-
-
-//        try {
-//            peerClientThread.sleep(1000);
-//            peerClient.setMessage(message);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-
         // message should be displayed on the sender screen,
         //  send to the chosen user and displayed on his screen
         // to do that I have to create for each user client and server.
@@ -181,14 +146,14 @@ public class ChatController {
         this.receiver = receiver;
     }
 
+    /**
+     * Displays peer response on the chat panel.
+     * This method is used by this PeerServer to set/display message from another peer
+     * @param peerResponse message form another peer
+     */
     public void setPeerResponse(String peerResponse) {
         this.peerResponse = peerResponse;
         System.out.println(peerResponse + " peer REsponse" + this.peerResponse);
-      /* Label labelResponse = new Label();
-        labelResponse.setId("labelResponse");
-        labelResponse.setText(this.peerResponse + "     response ");
-        labelResponse.setAlignment(Pos.CENTER_RIGHT);
-        labelResponse.setWrapText(true);*/
       ChatMessage message = new ChatMessage(peerResponse, sender, receiver, ChatMessageType.RESPONSE);
       chatMessages.add(message);
       Platform.runLater(() ->{
@@ -200,9 +165,11 @@ public class ChatController {
       });
 
     }
-    public  void saveMessage(){
-       // fileName="C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\"+sender.getUsername()+".txt";
 
+    /**
+     * Save all conversation to a file
+     */
+    public  void saveMessage(){
         try(FileOutputStream fos = new FileOutputStream(fileName);
             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 
@@ -219,8 +186,11 @@ public class ChatController {
 
     }
 
+    /**
+     * Loading all messages and displaying them on the chat panel
+     * @throws FileNotFoundException
+     */
     public void readMeassage() throws FileNotFoundException {
-      //  fileName="C:\\Users\\Adrian\\IdeaProjects\\Projekt TS\\javaFXtest\\src\\controllers\\"+sender.getUsername()+".txt";
         File file = new File(fileName);
         try {
             file.createNewFile(); // if file already exists will do nothing
@@ -256,36 +226,6 @@ public class ChatController {
             }
         }
         chat.heightProperty().addListener(observable -> scrollPane.setVvalue(1D));
-
-
-
-
-
-
-
-
-/*
-        ChatMessage chatMessage;
-        try(ObjectInputStream ios = new ObjectInputStream(new FileInputStream(fileName))) {
-            while ((chatMessage = (ChatMessage) ios.readObject()) != null) {
-                System.out.println("ADD" + chatMessage.getMessage() + " " + chatMessage.getSender() + " "+ chatMessage.getReceiver());
-                chatMessages2.add(chatMessage);
-            }
-            System.out.println("EXIT FROM LOOP ");
-            for (ChatMessage chatMessage2 : chatMessages2) {
-                System.out.println("chatMessahe 2 !!!!!!!!!!!");
-                System.out.println("@@@@" +chatMessage2.getMessage() + " ");
-            }
-        } catch (EOFException e) {
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-      */
     }
 
     public String getFileName() {

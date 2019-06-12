@@ -25,7 +25,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Log in" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+      <Label prefHeight="101.0" prefWidth="328.0" text="Multichat" GridPane.columnSpan="3" GridPane.halignment="CENTER">
          <font>
             <Font name="Symbol" size="74.0" />
          </font>
@@ -33,7 +33,7 @@
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
                   <Stop color="#7537e5" />
-                  <Stop color="#7537e5" offset="0.007246376811594203" />
+                  <Stop color="#7537e5" offset="0.014492753623188406" />
                   <Stop color="#00bfff" offset="1.0" />
                </stops>
             </LinearGradient>
